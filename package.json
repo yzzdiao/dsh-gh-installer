@@ -1,0 +1,74 @@
+{
+  "name": "dsh-gh-installer",
+  "version": "0.1.0",
+  "description": "在 dsh-go 手机 App 里粘贴 GitHub 地址即可安装 DSH 插件：镜像下载、打包、装进引擎，并显示实时进度与一键重启入口。",
+  "license": "MIT",
+  "author": "dsh-go community",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "dsh-gh-installer": "bin/install.mjs"
+  },
+  "files": [
+    "lib",
+    "bin",
+    "cordis.patch.yml",
+    "README.md",
+    "README.en.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "dsh",
+    "dsh-go",
+    "deepseek-harness",
+    "plugin",
+    "github",
+    "installer",
+    "dshGo"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yzzdiao/dsh-gh-installer.git"
+  },
+  "homepage": "https://github.com/yzzdiao/dsh-gh-installer#readme",
+  "bugs": {
+    "url": "https://github.com/yzzdiao/dsh-gh-installer/issues"
+  },
+  "engines": {
+    "node": ">=22.19",
+    "dsh": ">=0.2.1-rc.2 <0.3.0-0"
+  },
+  "scripts": {
+    "check": "node --check lib/index.js && node --check lib/install.mjs && node --check bin/install.mjs"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "dshGo": {
+    "v": 1,
+    "title": { "zh": "GH 插件安装器", "en": "GH Plugin Installer" },
+    "icon": "download",
+    "wants": ["clipboard"],
+    "contributes": {
+      "composer.actions": [
+        { "id": "install", "label": { "zh": "装GH插件", "en": "Install GH" }, "icon": "download" }
+      ],
+      "composer.strip": [
+        { "id": "status", "icon": "download", "panel": "main" }
+      ],
+      "panels": [
+        { "id": "main", "title": "GH 插件安装器", "icon": "download", "placement": ["session.tab", "features", "chat.panel"] }
+      ]
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
