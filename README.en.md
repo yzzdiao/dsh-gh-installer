@@ -19,10 +19,13 @@ Detected in this order (the panel shows "识别为: …"):
 
 | Strategy | Detected by | Installed to |
 |---|---|---|
+| A0. Author-declared | `dsh.install.preferred` (tarball/git/npm) in `package.json` — uses the author's own release | the profile |
 | A. DSH plugin bundle | `package.json` has `dsh.bundle.patch` | the profile (`dsh plugin add`) |
 | B. Skill collection | multiple `SKILL.md` files (e.g. `skills/*/SKILL.md`) | one directory per skill under `$DSH_HOME/skills/` |
 | C. Single skill | a `SKILL.md` at the root or one level deep | `$DSH_HOME/skills/<name>/` |
 | D. README instructions | parses `npx <pkg>`, `npm i <pkg>`, `dsh plugin add <spec>`, or "put it under skills/" from the README | follows what the README says |
+
+Strategy A0 uses the author's published package (more reliable) and **falls back to a mirror proxy when GitHub Releases are unreachable** (verified working); only then does it pack the files itself.
 
 Strategy D covers most repos that document their install steps. If nothing is recognized you get an explicit reason and the relevant README excerpt in the detailed log.
 

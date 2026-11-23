@@ -19,10 +19,13 @@
 
 | 策略 | 识别依据 | 装到哪 |
 |---|---|---|
+| A0. 作者声明 | `package.json` 的 `dsh.install.preferred`（tarball/git/npm），用作者发布的包 | 装进 profile |
 | A. DSH 插件包 | `package.json` 里有 `dsh.bundle.patch` | 装进 profile（`dsh plugin add`） |
 | B. 技能集合仓库 | 仓库里有多个 `SKILL.md`（如 `skills/*/SKILL.md`） | 每个技能一个目录，装到 `$DSH_HOME/skills/` |
 | C. 单一技能仓库 | 根目录或单层子目录有 `SKILL.md` | 装到 `$DSH_HOME/skills/<名字>/` |
 | D. README 指令 | 从 README 解析 `npx <pkg>`、`npm i <pkg>`、`dsh plugin add <spec>`，或「放到 skills 目录」的说明 | 按 README 指示执行 |
+
+策略 A0 会使用作者发布的完整包（更可靠），**直连 GitHub Release 不通时自动切镜像代理**（实测有效）；都不行才回退自己拼包。
 
 策略 D 覆盖大多数在 README 里写了安装方法的仓库。识别不到时给出明确原因，并把 README 关键片段写进详细日志。
 
