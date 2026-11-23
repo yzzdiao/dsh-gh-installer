@@ -2,16 +2,38 @@
 
 [English](README.en.md) | 中文
 
-Install a DSH plugin into the local engine of the [dsh-go](https://github.com/ccch1mneyyy/dsh-Go) phone app just by pasting a GitHub repo URL. It turns the whole "mirror download → verify bundle → pack → install into profile → show progress → one-tap restart" flow into a native UI, so you don't need a terminal.
+Install a DSH plugin or skill into the [dsh-go](https://github.com/ccch1mneyyy/dsh-Go) phone app just by pasting a GitHub repo URL. The repo does not have to be a standard DSH plugin — the installer detects the repo type and follows whatever install method the README describes. When something fails, the full log opens automatically so you can see exactly what happened at every step.
 
 ## Features
 
 | Surface | Content |
 |---|---|
 | Composer capsule | "Install GH": reads a GitHub URL from the clipboard and starts installing |
-| Panel | URL form + 7 live progress steps (parse/version/list/download/pack/install/done) + recent log |
+| Panel | URL form + 8 live progress steps + summary log + **expandable detailed log** (every HTTP request and command output) |
 | Status strip | Install status above the input box; tap to open the panel |
 | Restart entry | After success, a "Restart engine" button opens 设置 › 本机引擎 |
+
+## Which repos are supported
+
+Detected in this order (the panel shows "识别为: …"):
+
+| Strategy | Detected by | Installed to |
+|---|---|---|
+| A. DSH plugin bundle | `package.json` has `dsh.bundle.patch` | the profile (`dsh plugin add`) |
+| B. Skill collection | multiple `SKILL.md` files (e.g. `skills/*/SKILL.md`) | one directory per skill under `$DSH_HOME/skills/` |
+| C. Single skill | a `SKILL.md` at the root or one level deep | `$DSH_HOME/skills/<name>/` |
+| D. README instructions | parses `npx <pkg>`, `npm i <pkg>`, `dsh plugin add <spec>`, or "put it under skills/" from the README | follows what the README says |
+
+Strategy D covers most repos that document their install steps. If nothing is recognized you get an explicit reason and the relevant README excerpt in the detailed log.
+
+## Troubleshooting
+
+On failure:
+- the reason appears at the top of the panel;
+- the summary log lists readable steps;
+- the detailed log **opens automatically** with per-file HTTP status codes, full `dsh plugin add` output and stack traces.
+
+Copy the detailed log to diagnose the issue or file a report.
 
 ## Install
 
