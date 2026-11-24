@@ -44,7 +44,13 @@ function install() {
     // Copy everything except dev-only files.
     cpSync(ROOT, DEST, {
       recursive: true,
-      filter: (src) => !/[\\/](?:\.git|node_modules|cache)(?:[\\/]|$)/.test(src),
+      // 只按“相对包根”的路径判断，否则 npx 缓存路径里的 node_modules
+      // 会把整个包误判为要跳过，复制出空目录。
+      filter: (src) => {
+        const rel = src.slice(ROOT.length).replace(/^[\\/]+/, '')
+        if (!rel) return true
+        return !/(^|[\\/])(?:\.git|node_modules|cache)([\\/]|$)/.test(rel)
+      },
     })
     log('copied to', DEST)
   }
@@ -54,7 +60,15 @@ function install() {
     })
     log(out.trim().split('\n').filter(l => /^\+ |Done|Already/i.test(l)).slice(-3).join(' | '))
   } catch (e) {
-    log('register failed:', String(e.stderr || e.message).trim().slice(0, 400))
+    const err = String(e.stderr || e.message).trim()
+    log('register failed:', err.split('\n')[0].slice(0, 300))
+    if (/cannot resolve profile bundle|initialized profile/.test(err)) {
+      log('')
+      log('原因：这个 profile 是新建的，还没有 DSH 基础 bundle，不能直接 add。')
+      log('做法：先让 DSH 用它启动一次（例如 `dsh ' + profile + '`），或换一个已有的 profile：')
+      log('  npx -y github:yzzdiao/dsh-gh-installer install --profile web')
+    }
+    log('文件已复制到', DEST, '，注册未完成。')
     process.exitCode = 1
     return
   }

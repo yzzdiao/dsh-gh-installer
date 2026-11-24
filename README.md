@@ -50,19 +50,30 @@
 
 ## 安装
 
-```sh
-npx dsh-gh-installer install
-```
+**这个包还没发布到 npm**，所以 `npx dsh-gh-installer` 目前不能用。用下面任一方式：
 
-或者直接装进 profile（远程主机需先有 dsh-go 桥接）：
+**方式一：直接从 GitHub 装（推荐，一条命令）**
 
 ```sh
-dsh plugin --profile web add dsh-gh-installer
+npx -y github:yzzdiao/dsh-gh-installer install
 ```
+
+装到本机 `~/.dsh/dsh-go/plugins/dsh-gh-installer/` 并注册进 profile。加 `--profile <名>` 指定主机（默认 `web`），`--force` 覆盖已装版本。
+
+看安装位置：`npx -y github:yzzdiao/dsh-gh-installer status`
+
+**方式二：手动 clone 后装（GitHub 直连不稳时）**
+
+```sh
+git clone https://github.com/yzzdiao/dsh-gh-installer.git
+dsh plugin --profile web add ./dsh-gh-installer
+```
+
+**方式三：通过 dsh-go 的「装GH插件」装（手机）**
+
+复制 `https://github.com/yzzdiao/dsh-gh-installer`，点输入框上方的胶囊。它自己会走镜像下载，绕开 GitHub 直连问题。
 
 装完在 App 的「设置 › 插件」里确认已启用，并**重启一次引擎**让代码生效。
-
-也可用 `npx dsh-gh-installer status` 查看安装位置；`--profile <名>` 指定主机 profile，`--force` 强制覆盖。
 
 ## 用法
 

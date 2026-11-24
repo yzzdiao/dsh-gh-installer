@@ -1,6 +1,6 @@
 {
   "name": "dsh-gh-installer",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "在 dsh-go 手机 App 里粘贴 GitHub 地址即可安装 DSH 插件：镜像下载、打包、装进引擎，并显示实时进度与一键重启入口。",
   "license": "MIT",
   "author": "dsh-go community",

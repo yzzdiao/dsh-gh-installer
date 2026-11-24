@@ -50,19 +50,28 @@ Copy the detailed log to diagnose the issue or file a report.
 
 ## Install
 
-```sh
-npx dsh-gh-installer install
-```
+**This package is not on npm yet**, so `npx dsh-gh-installer` does not work today. Use one of these instead:
 
-Or add it to a profile directly (remote hosts need the dsh-go bridge first):
+**Option 1 — install straight from GitHub (one command):**
 
 ```sh
-dsh plugin --profile web add dsh-gh-installer
+npx -y github:yzzdiao/dsh-gh-installer install
 ```
 
-Then confirm it is enabled under 设置 › 插件 in the app and **restart the engine once** for code changes to take effect.
+That copies the package into `~/.dsh/dsh-go/plugins/dsh-gh-installer/` and registers it in the profile. Add `--profile <name>` for a specific host (default `web`), `--force` to overwrite.
 
-`npx dsh-gh-installer status` shows the install location; `--profile <name>` picks a host profile; `--force` overwrites.
+Check the target: `npx -y github:yzzdiao/dsh-gh-installer status`
+
+**Option 2 — clone and add manually (when github.com is unreachable):**
+
+```sh
+git clone https://github.com/yzzdiao/dsh-gh-installer.git
+dsh plugin --profile web add ./dsh-gh-installer
+```
+
+**Option 3 — install from the phone via the dsh-go "Install GH" capsule:** copy `https://github.com/yzzdiao/dsh-gh-installer` and tap the capsule; it downloads through a mirror itself.
+
+Then confirm it is enabled under 设置 › 插件 in the app and **restart the engine once**.
 
 ## Usage
 
