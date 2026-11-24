@@ -4,6 +4,16 @@
 
 在 [dsh-go](https://github.com/ccch1mneyyy/dsh-Go) 手机 App 里，直接粘贴一个 GitHub 仓库地址就能装 DSH 插件或技能。不要求仓库是标准 DSH 插件——它会自动识别仓库类型，并按 README 里写的安装方式来装；失败时详细日志直接展开，能看清每一步发生了什么。
 
+## 三种使用入口（手机 / 桌面 / CLI 都能用）
+
+| 主机 | 用法 |
+|---|---|
+| **dsh-go 手机** | 输入框上方「装GH插件」胶囊，或插件面板（带进度与日志） |
+| **桌面端 / 网页版** | 直接对 AI 说「装一下 https://github.com/用户/仓库」——会调用 `install_github_plugin` 工具 |
+| **任何主机的 CLI / TUI** | 斜杠命令 `/gh-install https://github.com/用户/仓库` |
+
+三个入口共用同一套策略链和同一个 `install.mjs`，行为完全一致。
+
 ## 功能
 
 | 位置 | 内容 |

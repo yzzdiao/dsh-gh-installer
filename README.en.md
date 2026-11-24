@@ -4,6 +4,16 @@
 
 Install a DSH plugin or skill into the [dsh-go](https://github.com/ccch1mneyyy/dsh-Go) phone app just by pasting a GitHub repo URL. The repo does not have to be a standard DSH plugin — the installer detects the repo type and follows whatever install method the README describes. When something fails, the full log opens automatically so you can see exactly what happened at every step.
 
+## Three entry points (phone / desktop / CLI)
+
+| Host | How |
+|---|---|
+| **dsh-go phone** | The "Install GH" capsule above the input box, or the plugin panel (progress + logs) |
+| **Desktop / Web UI** | Just ask the AI: "install https://github.com/user/repo" — it calls the `install_github_plugin` tool |
+| **CLI / TUI on any host** | Slash command `/gh-install https://github.com/user/repo` |
+
+All three share the same strategy chain and the same `install.mjs`.
+
 ## Features
 
 | Surface | Content |
